@@ -1,0 +1,6 @@
+<div *ngIf="!((products$ | async)?.length)">
+    Pas de produits...
+</div>
+<div *ngFor="let product of (products$ | async)">
+    {{ product.id }} &mdash; {{ product.name }}
+</div>
