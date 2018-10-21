@@ -5,9 +5,8 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 
 import { Effect, Actions } from '@ngrx/effects';
 
+import * as fromRoot from '../../../app/store';
 import * as productsActions from '../actions/products.action';
-
-// services
 import * as fromServices from '../../services';
 
 @Injectable()
@@ -23,7 +22,7 @@ export class ProductsEffects {
             switchMap(() => {
                 return this.productService.getProducts$()
                     .pipe(
-                        map(products => new productsActions.LoadProductsSuccess(products)),
+                        map((products) => new productsActions.LoadProductsSuccess(products)),
                         catchError((err => of(new productsActions.LoadProductsFail(err))))
                     );
             })
@@ -43,6 +42,17 @@ export class ProductsEffects {
         );
 
     @Effect()
+    createProductSuccess$ = this.actions$.ofType(productsActions.CREATE_PRODUCT_SUCCESS)
+        .pipe(
+            map((action: productsActions.CreateProductSuccess) => action.payload),
+            map((product) => {
+                return new fromRoot.Go({
+                    path: ['/products', product.id]
+                });
+            })
+        );
+
+    @Effect()
     updateProduct$ = this.actions$.ofType(productsActions.UPDATE_PRODUCT)
         .pipe(
             map((action: productsActions.UpdateProduct) => action.payload),
@@ -56,6 +66,17 @@ export class ProductsEffects {
         );
 
     @Effect()
+    updateProductSuccess$ = this.actions$.ofType(productsActions.UPDATE_PRODUCT_SUCCESS)
+        .pipe(
+            map((action: productsActions.UpdateProductSuccess) => action.payload),
+            map(() => {
+                return new fromRoot.Go({
+                    path: ['/products']
+                });
+            })
+        );
+
+    @Effect()
     deleteProduct$ = this.actions$.ofType(productsActions.DELETE_PRODUCT)
         .pipe(
             map((action: productsActions.DeleteProduct) => action.payload),
@@ -65,6 +86,17 @@ export class ProductsEffects {
                         map(() => new productsActions.DeleteProductSuccess(product)),
                         catchError((err => of(new productsActions.DeleteProductFail(err))))
                     );
+            })
+        );
+
+    @Effect()
+    deleteProductSuccess$ = this.actions$.ofType(productsActions.DELETE_PRODUCT_SUCCESS)
+        .pipe(
+            map((action: productsActions.DeleteProductSuccess) => action.payload),
+            map(() => {
+                return new fromRoot.Go({
+                    path: ['/products']
+                });
             })
         );
 }

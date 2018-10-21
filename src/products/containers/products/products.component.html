@@ -2,7 +2,7 @@
     Pas de produits...
 </div>
 <div *ngFor="let product of (products$ | async)">
-    <a [routerLink]="['/products', product.uid]">{{ product.uid }} &mdash; {{ product.msg }}</a>
+    <a [routerLink]="['/products', product.id]">{{ product.id }} &mdash; {{ product.msg }}</a>
 </div>
 
 <button (click)="onCreate()">Fake Add</button>

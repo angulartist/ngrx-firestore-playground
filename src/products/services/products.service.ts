@@ -24,8 +24,8 @@ export class ProductsService {
                 map(actions => {
                     return actions.map(a => {
                         const data = a.payload.doc.data() as Product;
-                        const uid = a.payload.doc.id;
-                        return { uid, ...data };
+                        const id = a.payload.doc.id;
+                        return { id, ...data };
                     });
                 }),
                 catchError((error: any) => throwError(error.json()))
@@ -44,7 +44,7 @@ export class ProductsService {
 
     updateProduct$(data): Observable<any> {
         const timestamp = this.timestamp;
-        const { uid: documentName } = data;
+        const { id: documentName } = data;
 
         return from(this.db.doc(`slack/${documentName}`).set({
             ...data,
@@ -53,7 +53,7 @@ export class ProductsService {
     }
 
     deleteProduct$(data): Observable<void> {
-        const { uid: documentName } = data;
+        const { id: documentName } = data;
 
         return from(this.db.doc(`slack/${documentName}`).delete());
     }

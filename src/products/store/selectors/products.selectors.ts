@@ -21,14 +21,14 @@ export const getSelectedProduct = createSelector(
     getProductsEntities,
     fromRoot.getRouterState,
     (entities, router): Product => {
-        return router.state && entities[router.state.params.productUid];
+        return router.state && entities[router.state.params.productId];
     }
 );
 
 export const getAllProducts = createSelector(
     getProductsEntities,
     (entities) => {
-        return Object.keys(entities).map(uid => entities[uid]);
+        return Object.keys(entities).map(id => entities[id]);
     }
 );
 
