@@ -28,4 +28,17 @@ export class ProductsEffects {
                     );
             })
         );
+
+    @Effect()
+    createProduct = this.actions$.ofType(productsActions.CREATE_PRODUCT)
+        .pipe(
+            map((action: productsActions.CreateProduct) => action.payload),
+            switchMap(product => {
+                return this.productService.createProduct(product)
+                    .pipe(
+                        map(_product => new productsActions.CreateProductSuccess(_product)),
+                        catchError((err => of(new productsActions.CreateProductFail(err))))
+                    );
+            })
+        );
 }

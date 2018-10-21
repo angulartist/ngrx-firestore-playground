@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 // db
@@ -28,5 +28,24 @@ export class ProductsService {
                 }),
                 catchError((error: any) => throwError(error.json()))
             );
+    }
+
+    createProduct(product): Observable<Product> {
+        const subject = new Subject();
+
+        this.db.collection('slack').add(product)
+            .then(
+                val => {
+                    subject.next(val);
+                    subject.complete();
+
+                },
+                err => {
+                    subject.error(err);
+                    subject.complete();
+                }
+            );
+
+        return subject.asObservable();
     }
 }

@@ -58,6 +58,19 @@ export function reducer(
                 loaded: false
             };
         }
+
+        case fromProducts.CREATE_PRODUCT_SUCCESS: {
+            const product = action.payload;
+            const entities = {
+                ...state.entities,
+                [product.uid]: product
+            };
+
+            return {
+                ...state,
+                entities
+            };
+        }
     }
 
     return state;

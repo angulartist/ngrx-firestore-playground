@@ -22,4 +22,13 @@ export class ProductsComponent implements OnInit {
         this.products$ = this.store.select(fromStore.getAllProducts);
         this.store.dispatch(new fromStore.LoadProducts());
     }
+
+    onCreate() {
+        // fake data, should use form
+        const data: Product = {
+            name: 'Prout'
+        };
+
+        this.store.dispatch(new fromStore.CreateProduct(data));
+    }
 }
