@@ -66,17 +66,6 @@ export class ProductsEffects {
         );
 
     @Effect()
-    updateProductSuccess$ = this.actions$.ofType(productsActions.UPDATE_PRODUCT_SUCCESS)
-        .pipe(
-            map((action: productsActions.UpdateProductSuccess) => action.payload),
-            map(() => {
-                return new fromRoot.Go({
-                    path: ['/products']
-                });
-            })
-        );
-
-    @Effect()
     deleteProduct$ = this.actions$.ofType(productsActions.DELETE_PRODUCT)
         .pipe(
             map((action: productsActions.DeleteProduct) => action.payload),
@@ -90,9 +79,11 @@ export class ProductsEffects {
         );
 
     @Effect()
-    deleteProductSuccess$ = this.actions$.ofType(productsActions.DELETE_PRODUCT_SUCCESS)
+    handleProductSuccess$ = this.actions$.ofType(
+        productsActions.DELETE_PRODUCT_SUCCESS,
+        productsActions.DELETE_PRODUCT_SUCCESS
+    )
         .pipe(
-            map((action: productsActions.DeleteProductSuccess) => action.payload),
             map(() => {
                 return new fromRoot.Go({
                     path: ['/products']
