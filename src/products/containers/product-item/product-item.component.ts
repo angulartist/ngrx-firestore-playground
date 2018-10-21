@@ -22,11 +22,12 @@ export class ProductItemComponent implements OnInit {
         this.product$ = this.store.select(fromStore.getSelectedProduct);
     }
 
-    onSelect(event: number[]) { }
+    onUpdate() {
+        // fake data
+        const newData: Product = {
+            name: 'pipi'
+        };
 
-    onCreate(event: Product) { }
-
-    onUpdate(event: Product) { }
-
-    onRemove(event: Product) { }
+        this.store.dispatch(new fromStore.UpdateProduct(newData));
+    }
 }

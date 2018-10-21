@@ -42,6 +42,26 @@ export class CreateProductSuccess implements Action {
     constructor(public payload: Product) { }
 }
 
+// update products
+export const UPDATE_PRODUCT = '[Products] Update product';
+export const UPDATE_PRODUCT_FAIL = '[Products] Update product Fail';
+export const UPDATE_PRODUCT_SUCCESS = '[Products] Update product Success';
+
+export class UpdateProduct implements Action {
+    readonly type = UPDATE_PRODUCT;
+    constructor(public payload: Product) { }
+}
+
+export class UpdateProductFail implements Action {
+    readonly type = UPDATE_PRODUCT_FAIL;
+    constructor(public payload: any) { }
+}
+
+export class UpdateProductSuccess implements Action {
+    readonly type = UPDATE_PRODUCT_SUCCESS;
+    constructor(public payload: Product) { }
+}
+
 // action types
 export type ProductsAction
     = LoadProducts
@@ -49,4 +69,7 @@ export type ProductsAction
     | LoadProductsSuccess
     | CreateProduct
     | CreateProductFail
-    | CreateProductSuccess;
+    | CreateProductSuccess
+    | UpdateProduct
+    | UpdateProductFail
+    | UpdateProductSuccess;

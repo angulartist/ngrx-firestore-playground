@@ -4,7 +4,7 @@ import * as fromProducts from '../actions/products.action';
 import { Product } from '../../models/product.interface';
 
 export interface ProductState {
-    entities: { [uid: number]: Product };
+    entities: { [uid: string]: Product };
     loaded: boolean;
     loading: boolean;
 }
@@ -32,7 +32,7 @@ export function reducer(
             const products = action.payload;
 
             const entities = products.reduce(
-                (_entities: { [uid: number]: Product }, product: Product) => {
+                (_entities: { [uid: string]: Product }, product: Product) => {
                     return {
                         ..._entities,
                         [product.uid]: product
@@ -59,6 +59,7 @@ export function reducer(
             };
         }
 
+        case fromProducts.UPDATE_PRODUCT_SUCCESS:
         case fromProducts.CREATE_PRODUCT_SUCCESS: {
             const product = action.payload;
             const entities = {

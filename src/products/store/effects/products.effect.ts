@@ -30,14 +30,27 @@ export class ProductsEffects {
         );
 
     @Effect()
-    createProduct = this.actions$.ofType(productsActions.CREATE_PRODUCT)
+    createProduct$ = this.actions$.ofType(productsActions.CREATE_PRODUCT)
         .pipe(
             map((action: productsActions.CreateProduct) => action.payload),
-            switchMap(product => {
+            switchMap((product) => {
                 return this.productService.createProduct(product)
                     .pipe(
                         map(_product => new productsActions.CreateProductSuccess(_product)),
                         catchError((err => of(new productsActions.CreateProductFail(err))))
+                    );
+            })
+        );
+
+    @Effect()
+    updateProduct$ = this.actions$.ofType(productsActions.UPDATE_PRODUCT)
+        .pipe(
+            map((action: productsActions.UpdateProduct) => action.payload),
+            switchMap((product) => {
+                return this.productService.updateProduct(product)
+                    .pipe(
+                        map(_product => new productsActions.UpdateProductSuccess(_product)),
+                        catchError((err => of(new productsActions.UpdateProductFail(err))))
                     );
             })
         );
