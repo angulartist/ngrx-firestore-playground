@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, throwError, Subject } from 'rxjs';
+import { Observable, throwError, Subject, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 // db
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 
 // interfaces
 import { Product } from '../models/product.interface';
@@ -30,22 +30,8 @@ export class ProductsService {
             );
     }
 
-    createProduct(product): Observable<Product> {
-        const subject = new Subject();
+    createProduct(product): Observable<DocumentReference> {
 
-        this.db.collection('slack').add(product)
-            .then(
-                val => {
-                    subject.next(val);
-                    subject.complete();
-
-                },
-                err => {
-                    subject.error(err);
-                    subject.complete();
-                }
-            );
-
-        return subject.asObservable();
+        return from(this.db.collection('slack').add(product));
     }
 }
