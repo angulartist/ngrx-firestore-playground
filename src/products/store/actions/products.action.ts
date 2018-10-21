@@ -62,6 +62,26 @@ export class UpdateProductSuccess implements Action {
     constructor(public payload: Product) { }
 }
 
+// delete products
+export const DELETE_PRODUCT = '[Products] Delete product';
+export const DELETE_PRODUCT_FAIL = '[Products] Delete product Fail';
+export const DELETE_PRODUCT_SUCCESS = '[Products] Delete product Success';
+
+export class DeleteProduct implements Action {
+    readonly type = DELETE_PRODUCT;
+    constructor(public payload: Product) { }
+}
+
+export class DeleteProductFail implements Action {
+    readonly type = DELETE_PRODUCT_FAIL;
+    constructor(public payload: any) { }
+}
+
+export class DeleteProductSuccess implements Action {
+    readonly type = DELETE_PRODUCT_SUCCESS;
+    constructor(public payload: Product) { }
+}
+
 // action types
 export type ProductsAction
     = LoadProducts
@@ -72,4 +92,7 @@ export type ProductsAction
     | CreateProductSuccess
     | UpdateProduct
     | UpdateProductFail
-    | UpdateProductSuccess;
+    | UpdateProductSuccess
+    | DeleteProduct
+    | DeleteProductFail
+    | DeleteProductSuccess;

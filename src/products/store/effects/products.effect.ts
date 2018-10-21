@@ -21,7 +21,7 @@ export class ProductsEffects {
     loadProducts$ = this.actions$.ofType(productsActions.LOAD_PRODUCTS)
         .pipe(
             switchMap(() => {
-                return this.productService.getProducts()
+                return this.productService.getProducts$()
                     .pipe(
                         map(products => new productsActions.LoadProductsSuccess(products)),
                         catchError((err => of(new productsActions.LoadProductsFail(err))))
@@ -34,9 +34,9 @@ export class ProductsEffects {
         .pipe(
             map((action: productsActions.CreateProduct) => action.payload),
             switchMap((product) => {
-                return this.productService.createProduct(product)
+                return this.productService.createProduct$(product)
                     .pipe(
-                        map(_product => new productsActions.CreateProductSuccess(_product)),
+                        map(x => new productsActions.CreateProductSuccess(x)),
                         catchError((err => of(new productsActions.CreateProductFail(err))))
                     );
             })
@@ -47,10 +47,23 @@ export class ProductsEffects {
         .pipe(
             map((action: productsActions.UpdateProduct) => action.payload),
             switchMap((product) => {
-                return this.productService.updateProduct(product)
+                return this.productService.updateProduct$(product)
                     .pipe(
-                        map(_product => new productsActions.UpdateProductSuccess(_product)),
+                        map(x => new productsActions.UpdateProductSuccess(x)),
                         catchError((err => of(new productsActions.UpdateProductFail(err))))
+                    );
+            })
+        );
+
+    @Effect()
+    deleteProduct$ = this.actions$.ofType(productsActions.DELETE_PRODUCT)
+        .pipe(
+            map((action: productsActions.DeleteProduct) => action.payload),
+            switchMap((product) => {
+                return this.productService.deleteProduct$(product)
+                    .pipe(
+                        map(() => new productsActions.DeleteProductSuccess(product)),
+                        catchError((err => of(new productsActions.DeleteProductFail(err))))
                     );
             })
         );

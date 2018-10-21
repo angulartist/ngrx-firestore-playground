@@ -15,7 +15,7 @@ import {
 import { StoreModule, MetaReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { reducers, CustomSerializer } from './store';
+import { reducers, CustomSerializer, effects } from './store';
 
 // not used in production
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -45,7 +45,7 @@ import { AppComponent } from './app.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
     !environment.production ? [] : [],
   ],

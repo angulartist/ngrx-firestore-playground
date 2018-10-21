@@ -72,6 +72,16 @@ export function reducer(
                 entities
             };
         }
+
+        case fromProducts.DELETE_PRODUCT_SUCCESS: {
+            const product = action.payload;
+            const { [product.uid]: removed, ...entities } = state.entities;
+
+            return {
+                ...state,
+                entities
+            };
+        }
     }
 
     return state;

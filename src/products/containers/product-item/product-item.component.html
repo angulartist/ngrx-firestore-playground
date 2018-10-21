@@ -1,4 +1,7 @@
 <div *ngIf="product$ | async as product">
-    {{ product.uid }}
+    {{ product.uid }} - {{ product.name }}
+    <p>
+        <button (click)="onUpdate(product)">Fake Update</button>
+        <button (click)="onDelete(product)">DELETE Update</button>
+    </p>
 </div>
-<button (click)="onUpdate()">Fake Update</button>

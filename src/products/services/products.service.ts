@@ -18,7 +18,7 @@ export class ProductsService {
         return firebase.firestore.FieldValue.serverTimestamp();
     }
 
-    getProducts(): Observable<Product[]> {
+    getProducts$(): Observable<Product[]> {
         return this.db.collection('slack').snapshotChanges()
             .pipe(
                 map(actions => {
@@ -32,27 +32,29 @@ export class ProductsService {
             );
     }
 
-    createProduct(data): Observable<any> {
+    createProduct$(data): Observable<any> {
         const timestamp = this.timestamp;
 
         return from(this.db.collection('slack').add({
             ...data,
             updatedAt: timestamp,
             createdAt: timestamp
-        })).pipe(
-            tap(a => console.log('create: ', a))
-        );
+        }));
     }
 
-    updateProduct(data): Observable<any> {
+    updateProduct$(data): Observable<any> {
         const timestamp = this.timestamp;
+        const { uid: documentName } = data;
 
-        return from(this.db.doc(`slack/0aMwkyVWF33PF7qDIvKy`).set({
+        return from(this.db.doc(`slack/${documentName}`).set({
             ...data,
-            updatedAt: timestamp,
-            createdAt: timestamp
-        })).pipe(
-            tap(a => console.log('update: ', a))
-        );
+            updatedAt: timestamp
+        }));
+    }
+
+    deleteProduct$(data): Observable<void> {
+        const { uid: documentName } = data;
+
+        return from(this.db.doc(`slack/${documentName}`).delete());
     }
 }
