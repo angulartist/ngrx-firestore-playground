@@ -81,7 +81,7 @@ export class ProductsEffects {
     @Effect()
     handleProductSuccess$ = this.actions$.ofType(
         productsActions.DELETE_PRODUCT_SUCCESS,
-        productsActions.DELETE_PRODUCT_SUCCESS
+        productsActions.UPDATE_PRODUCT_SUCCESS
     )
         .pipe(
             map(() => {

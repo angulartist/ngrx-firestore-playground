@@ -16,6 +16,9 @@ import * as fromContainers from './containers';
 // services
 import * as fromServices from './services';
 
+// services
+import * as fromGuards from './guards';
+
 // routing
 import { ProductsRoutingModule } from './products-routing.module';
 
@@ -28,7 +31,7 @@ import { ProductsRoutingModule } from './products-routing.module';
         StoreModule.forFeature('products', reducers),
         EffectsModule.forFeature(effects)
     ],
-    providers: [...fromServices.services],
+    providers: [...fromServices.services, ...fromGuards.guards],
     declarations: [...fromContainers.containers],
     exports: [...fromContainers.containers],
 })
