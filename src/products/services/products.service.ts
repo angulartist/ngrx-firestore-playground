@@ -1,19 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
+// db
+import { AngularFirestore } from '@angular/fire/firestore';
+
+// interfaces
 import { Product } from '../models/product.interface';
 
 @Injectable()
 export class ProductsService {
-    constructor(private http: HttpClient) { }
+    constructor
+        (
+        private db: AngularFirestore
+        ) { }
 
-    // testing purposes
     getProducts(): Observable<Product[]> {
-        return this.http
-            .get<Product[]>('http://hp-api.herokuapp.com/api/characters/students')
-            .pipe(catchError((err: any) => throwError(err.json())));
+        return this.db.collection('slack').snapshotChanges()
+            .pipe(
+                map(actions => {
+                    return actions.map(a => {
+                        const data = a.payload.doc.data() as Product;
+                        const uid = a.payload.doc.id;
+                        return { uid, ...data };
+                    });
+                }),
+                catchError((error: any) => throwError(error.json()))
+            );
     }
 }

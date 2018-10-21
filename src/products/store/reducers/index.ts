@@ -20,9 +20,16 @@ export const getProductState = createSelector(
     (state: ProductsState) => state.products
 );
 
-export const getAllProducts = createSelector(
+export const getProductsEntities = createSelector(
     getProductState,
-    fromProducts.getProducts
+    fromProducts.getProductsEntities
+);
+
+export const getAllProducts = createSelector(
+    getProductsEntities,
+    (entities) => {
+        return Object.keys(entities).map(id => entities[id]);
+    }
 );
 
 export const getProductsLoaded = createSelector(
