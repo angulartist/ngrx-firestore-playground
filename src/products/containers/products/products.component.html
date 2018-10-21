@@ -2,5 +2,5 @@
     Pas de produits...
 </div>
 <div *ngFor="let product of (products$ | async)">
-    {{ product.uid }} &mdash; {{ product.msg }}
+    <a [routerLink]="['/products', product.uid]">{{ product.uid }} &mdash; {{ product.msg }}</a>
 </div>

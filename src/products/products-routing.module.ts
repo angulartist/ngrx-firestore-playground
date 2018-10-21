@@ -8,6 +8,10 @@ const ROUTES: Routes = [
     {
         path: '',
         component: fromContainers.ProductsComponent,
+    },
+    {
+        path: ':productUid',
+        component: fromContainers.ProductItemComponent,
     }
 ];
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import * as fromStore from '../../store';
 import { Product } from '../../models/product.interface';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'app-products',
     styleUrls: ['products.component.scss'],
     templateUrl: 'products.component.html'

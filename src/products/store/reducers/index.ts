@@ -1,4 +1,4 @@
-import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
 import * as fromProducts from './products.reducer';
 
@@ -12,32 +12,4 @@ export const reducers: ActionReducerMap<ProductsState> = {
 
 export const getProductsState = createFeatureSelector<ProductsState>(
     'products'
-);
-
-// products state
-export const getProductState = createSelector(
-    getProductsState,
-    (state: ProductsState) => state.products
-);
-
-export const getProductsEntities = createSelector(
-    getProductState,
-    fromProducts.getProductsEntities
-);
-
-export const getAllProducts = createSelector(
-    getProductsEntities,
-    (entities) => {
-        return Object.keys(entities).map(id => entities[id]);
-    }
-);
-
-export const getProductsLoaded = createSelector(
-    getProductState,
-    fromProducts.getProductsLoaded
-);
-
-export const getProductsLoading = createSelector(
-    getProductState,
-    fromProducts.getProductsLoading
 );
